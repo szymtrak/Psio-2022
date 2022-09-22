@@ -138,28 +138,28 @@ int main() {
             //Bullets colision
 
 
-            for (int i = 0; i < enemis.size(); i++) {
+            for (auto i = enemis.begin(); i != enemis.end(); i++) {
                 int v2 = rand() % 100;
-                for (int j = 0; j < bullets.size(); j++) {
-                    if (enemis[i].ChekDead(bullets[j]) == true) {
-                        bullets.erase(bullets.begin() + j);
+                for (auto j = bullets.begin(); j != bullets.end(); j++) {
+                    if (i->ChekDead(*j) == true) {
+                        bullets.erase(j);
                         break;
                     }
-                    if (Player.ChekDead(bullets[j]) == true) {
-                        bullets.erase(bullets.begin() + j);
+                    if (Player.ChekDead(*j) == true) {
+                        bullets.erase(j);
                         break;
                     }
                 }
             }
-            for (int i = 0; i < Barier.size(); i++) {
+            for (auto i = Barier.begin(); i != Barier.end(); i++) {
                 int v2 = rand() % 100;
-                for (int j = 0; j < bullets.size(); j++) {
-                    if (bullets[j].getRight() > Barier[i].getPosition().x &&
-                        bullets[j].getTop() < Barier[i].getPosition().y + Barier[i].getGlobalBounds().height &&
-                        bullets[j].getBottom() > Barier[i].getPosition().y &&
-                        bullets[j].getLeft() < Barier[i].getPosition().x + Barier[i].getGlobalBounds().width) {
-                        Barier.erase(Barier.begin() + i);
-                        bullets.erase(bullets.begin() + j);
+                for (auto j = bullets.begin(); j != bullets.end(); j++) {
+                    if (j->getRight() > i->getPosition().x &&
+                        j->getTop() < i->getPosition().y + i->getGlobalBounds().height &&
+                        j->getBottom() > i->getPosition().y &&
+                        j->getLeft() < i->getPosition().x + i->getGlobalBounds().width) {
+                        Barier.erase(i);
+                        bullets.erase(j);
                         break;
 
 
@@ -168,16 +168,16 @@ int main() {
             }
 
             //Player
-            for (int i = 0; i < bullets.size(); i++) {
-                if (bullets[i].destroy() == true) {
-                    bullets.erase(bullets.begin() + i);
+            for (auto i = bullets.begin(); i != bullets.end(); i++) {
+                if (i->destroy() == true) {
+                    bullets.erase(i);
                     //std::cout << bullets.size()<<std::endl;
                     break;
                 }
             }
-            for (int i = 0; i < enemis.size(); i++) {
-                if (enemis[i].Edead() == true) {
-                    enemis.erase(enemis.begin() + i);
+            for (auto i = enemis.begin(); i != enemis.end(); i++) {
+                if (i->Edead() == true) {
+                    enemis.erase(i);
                     break;
                 }
             }
@@ -186,18 +186,18 @@ int main() {
             window.clear();
             if (Player.GameSteat() == false) {
                 Player.draw(window);
-                for (int i = 0; i < bullets.size(); i++)
+                for (auto i = bullets.begin(); i < bullets.end(); i++)
                 {
-                    bullets[i].move();
-                    bullets[i].draw(window);
+                    i->move();
+                    i->draw(window);
                 }
-                for (int i = 0; i < enemis.size(); i++)
+                for (auto i = enemis.begin(); i != enemis.end(); i++)
                 {
-                    enemis[i].draw(window);
+                    i->draw(window);
                 }
-                for (int i = 0; i < Barier.size(); i++)
+                for (auto i = Barier.begin(); i < Barier.end(); i++)
                 {
-                    window.draw(Barier[i]);
+                    window.draw(*i);
                 }
             }
             else {
