@@ -151,14 +151,15 @@ int main() {
                     }
                 }
             }
-            for (auto i = Barier.begin(); i != Barier.end(); i++) {
+            for (int i = 0; i <  Barier.size(); i++) {
                 int v2 = rand() % 100;
                 for (auto j = bullets.begin(); j != bullets.end(); j++) {
-                    if (j->getRight() > i->getPosition().x &&
-                        j->getTop() < i->getPosition().y + i->getGlobalBounds().height &&
-                        j->getBottom() > i->getPosition().y &&
-                        j->getLeft() < i->getPosition().x + i->getGlobalBounds().width) {
-                        Barier.erase(i);
+                    if (j->getRight() > Barier[i].getPosition().x &&
+                        j->getTop() < Barier[i].getPosition().y + Barier[i].getGlobalBounds().height &&
+                        j->getBottom() > Barier[i].getPosition().y &&
+                        j->getLeft() < Barier[i].getPosition().x + Barier[i].getGlobalBounds().width) {
+
+                        Barier.erase(Barier.begin() + i);
                         bullets.erase(j);
                         break;
 
@@ -195,7 +196,7 @@ int main() {
                 {
                     i->draw(window);
                 }
-                for (auto i = Barier.begin(); i < Barier.end(); i++)
+                for (auto i = Barier.begin(); i != Barier.end(); i++)
                 {
                     window.draw(*i);
                 }
